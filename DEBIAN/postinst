@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Use SUDO_USER to get the username if the script is run with sudo
+if [ ! -z "$SUDO_USER" ]; then
+    USERNAME=$SUDO_USER
+else
+    USERNAME=$(whoami)
+fi
+
+UID=$(id -u ${USERNAME})
+DISPLAY=$(who | grep $USERNAME | awk '{print $2}' | head -n1)
+
+# Replace the placeholder with the actual username
+sed -i "s/%USERNAME%/$USERNAME/g" /tmp/memory_checker.service.template
+sed -i "s/%UID%/$UID/g" /tmp/memory_checker.service.template
+sed -i "s/%DISPLAY%/$DISPLAY/g" /tmp/memory_checker.service.template
+
+mv /tmp/memory_checker.service.template /etc/systemd/system/memory_checker.service
+
+# Enable and start the service
+systemctl daemon-reload
+
+systemctl enable memory_checker.service
+systemctl restart memory_checker.service
+

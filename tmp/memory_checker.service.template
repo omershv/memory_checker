@@ -1,0 +1,16 @@
+[Unit]
+Description=Memory Checker Service
+After=network.target
+
+[Service]
+Environment="DISPLAY=%DISPLAY%"
+Environment="XAUTHORITY=/home/%USERNAME%/.Xauthority"
+Environment="DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/%UID%/bus"
+ExecStart=/usr/local/bin/memory_checker.sh
+Restart=always
+User=%USERNAME%
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
+

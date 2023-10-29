@@ -1,0 +1,8 @@
+Package: memory-checker
+Version: 1.0
+Section: custom
+Priority: optional
+Architecture: all
+Essential: no
+Maintainer: Omer S <your_email@example.com>
+Description: Monitors free memory and alerts when it is running low
